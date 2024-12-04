@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "maps",
+  "info": {
+    "singularName": "map",
+    "pluralName": "maps",
+    "displayName": "Map",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "minLength": 1
+    },
+    "location": {
+      "type": "customField",
+      "customField": "plugin::google-maps.location-picker"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "game": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::game.game",
+      "inversedBy": "maps"
+    }
+  }
+}
