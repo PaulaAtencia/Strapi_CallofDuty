@@ -362,146 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiGameGame extends Schema.CollectionType {
-  collectionName: 'games';
-  info: {
-    singularName: 'game';
-    pluralName: 'games';
-    displayName: 'Game';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String;
-    release_date: Attribute.Date & Attribute.Required;
-    maps: Attribute.Relation<'api::game.game', 'oneToMany', 'api::map.map'>;
-    weapons: Attribute.Relation<
-      'api::game.game',
-      'manyToMany',
-      'api::weapon.weapon'
-    >;
-    image: Attribute.Media;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::game.game', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::game.game', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
-export interface ApiMapMap extends Schema.CollectionType {
-  collectionName: 'maps';
-  info: {
-    singularName: 'map';
-    pluralName: 'maps';
-    displayName: 'Map';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.Required &
-      Attribute.SetMinMaxLength<{
-        minLength: 1;
-      }>;
-    location: Attribute.JSON &
-      Attribute.CustomField<'plugin::google-maps.location-picker'>;
-    image: Attribute.Media;
-    description: Attribute.String;
-    game: Attribute.Relation<'api::map.map', 'manyToOne', 'api::game.game'>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::map.map', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::map.map', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
-export interface ApiProfileProfile extends Schema.CollectionType {
-  collectionName: 'profiles';
-  info: {
-    singularName: 'profile';
-    pluralName: 'profiles';
-    displayName: 'Profile';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    avatar: Attribute.Media;
-    user: Attribute.Relation<
-      'api::profile.profile',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::profile.profile',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::profile.profile',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiWeaponWeapon extends Schema.CollectionType {
-  collectionName: 'weapons';
-  info: {
-    singularName: 'weapon';
-    pluralName: 'weapons';
-    displayName: 'Weapon';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.Required &
-      Attribute.SetMinMaxLength<{
-        minLength: 1;
-      }>;
-    info: Attribute.JSON & Attribute.Required;
-    image: Attribute.Media;
-    games: Attribute.Relation<
-      'api::weapon.weapon',
-      'manyToMany',
-      'api::game.game'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::weapon.weapon',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::weapon.weapon',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -839,10 +699,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    profile: Attribute.Relation<
+    avatar: Attribute.Media;
+    comments: Attribute.Relation<
       'plugin::users-permissions.user',
-      'oneToOne',
-      'api::profile.profile'
+      'oneToMany',
+      'api::comment.comment'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -861,6 +722,157 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiCommentComment extends Schema.CollectionType {
+  collectionName: 'comments';
+  info: {
+    singularName: 'comment';
+    pluralName: 'comments';
+    displayName: 'Comment';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content: Attribute.Text;
+    user: Attribute.Relation<
+      'api::comment.comment',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    game: Attribute.Relation<
+      'api::comment.comment',
+      'manyToOne',
+      'api::game.game'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::comment.comment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::comment.comment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiGameGame extends Schema.CollectionType {
+  collectionName: 'games';
+  info: {
+    singularName: 'game';
+    pluralName: 'games';
+    displayName: 'Game';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    release_date: Attribute.Date & Attribute.Required;
+    maps: Attribute.Relation<'api::game.game', 'oneToMany', 'api::map.map'>;
+    weapons: Attribute.Relation<
+      'api::game.game',
+      'manyToMany',
+      'api::weapon.weapon'
+    >;
+    image: Attribute.Media;
+    comments: Attribute.Relation<
+      'api::game.game',
+      'oneToMany',
+      'api::comment.comment'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::game.game', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::game.game', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiMapMap extends Schema.CollectionType {
+  collectionName: 'maps';
+  info: {
+    singularName: 'map';
+    pluralName: 'maps';
+    displayName: 'Map';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        minLength: 1;
+      }>;
+    location: Attribute.JSON &
+      Attribute.CustomField<'plugin::google-maps.location-picker'>;
+    image: Attribute.Media;
+    description: Attribute.String;
+    game: Attribute.Relation<'api::map.map', 'manyToOne', 'api::game.game'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::map.map', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::map.map', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiWeaponWeapon extends Schema.CollectionType {
+  collectionName: 'weapons';
+  info: {
+    singularName: 'weapon';
+    pluralName: 'weapons';
+    displayName: 'Weapon';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        minLength: 1;
+      }>;
+    info: Attribute.JSON & Attribute.Required;
+    image: Attribute.Media;
+    games: Attribute.Relation<
+      'api::weapon.weapon',
+      'manyToMany',
+      'api::game.game'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::weapon.weapon',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::weapon.weapon',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -871,10 +883,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::game.game': ApiGameGame;
-      'api::map.map': ApiMapMap;
-      'api::profile.profile': ApiProfileProfile;
-      'api::weapon.weapon': ApiWeaponWeapon;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::google-maps.config': PluginGoogleMapsConfig;
@@ -882,6 +890,10 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::comment.comment': ApiCommentComment;
+      'api::game.game': ApiGameGame;
+      'api::map.map': ApiMapMap;
+      'api::weapon.weapon': ApiWeaponWeapon;
     }
   }
 }

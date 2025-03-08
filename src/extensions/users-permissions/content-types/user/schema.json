@@ -65,10 +65,17 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "profile": {
+    "avatar": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "comments": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::profile.profile",
+      "relation": "oneToMany",
+      "target": "api::comment.comment",
       "mappedBy": "user"
     }
   }
