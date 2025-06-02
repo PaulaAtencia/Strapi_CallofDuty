@@ -12,7 +12,6 @@ module.exports = ({ env }) => ({
           upload: {},
           delete: {},
         },
-        breakpoints: {}
       },
     },
     
