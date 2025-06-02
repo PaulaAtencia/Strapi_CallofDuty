@@ -1,8 +1,8 @@
 {
   "name": "callofdutystrapi",
   "private": true,
-  "version": "0.1.0",
-  "description": "A Strapi application",
+  "version": "1.0.0",
+  "description": "Strapi Server for Call of Duty Wiki",
   "scripts": {
     "develop": "strapi develop",
     "start": "strapi start",
