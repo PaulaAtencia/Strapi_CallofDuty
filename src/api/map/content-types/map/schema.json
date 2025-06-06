@@ -37,6 +37,12 @@
       "relation": "manyToOne",
       "target": "api::game.game",
       "inversedBy": "maps"
+    },
+    "creator": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "maps"
     }
   }
 }

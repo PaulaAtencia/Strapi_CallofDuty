@@ -705,6 +705,16 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::comment.comment'
     >;
+    weapons: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::weapon.weapon'
+    >;
+    maps: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::map.map'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -821,6 +831,11 @@ export interface ApiMapMap extends Schema.CollectionType {
     image: Attribute.Media;
     description: Attribute.String;
     game: Attribute.Relation<'api::map.map', 'manyToOne', 'api::game.game'>;
+    creator: Attribute.Relation<
+      'api::map.map',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -854,6 +869,11 @@ export interface ApiWeaponWeapon extends Schema.CollectionType {
       'api::weapon.weapon',
       'manyToMany',
       'api::game.game'
+    >;
+    creator: Attribute.Relation<
+      'api::weapon.weapon',
+      'manyToOne',
+      'plugin::users-permissions.user'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;

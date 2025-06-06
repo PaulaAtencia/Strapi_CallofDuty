@@ -35,6 +35,12 @@
       "relation": "manyToMany",
       "target": "api::game.game",
       "mappedBy": "weapons"
+    },
+    "creator": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "weapons"
     }
   }
 }

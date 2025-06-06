@@ -77,6 +77,18 @@
       "relation": "oneToMany",
       "target": "api::comment.comment",
       "mappedBy": "user"
+    },
+    "weapons": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::weapon.weapon",
+      "mappedBy": "creator"
+    },
+    "maps": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::map.map",
+      "mappedBy": "creator"
     }
   }
 }
